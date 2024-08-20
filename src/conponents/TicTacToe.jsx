@@ -12,7 +12,11 @@ function TicTacToe() {
     setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
 
     const newWinner = checkWinner(newGameBoard);
-    newWinner ? setWinner(newWinner) : isMatchCompleted(setWinner("Draw!"));
+    if (newWinner) {
+      setWinner(newWinner);
+    } else if (isMatchDraw(newGameBoard)) {
+      setWinner("Draw!");
+    }
   };
 
   const checkWinner = (gameBoard) => {
@@ -40,16 +44,25 @@ function TicTacToe() {
     return null;
   };
 
-  const isMatchCompleted = (board) => {
+  const isMatchCompleted = (winner) => {
+    if(winner) {
+
+    }
+  };
+
+  const isMatchDraw = (board) => {
     return board.every((cell) => cell !== "");
   };
 
   return (
     <>
       <div className="my-5 text-xl">
-        <h4 className="text-white">
+        {winner === null && <h4 className="text-white">
           Player Turn : <span className="text-lime-500">{currentPlayer}</span>
-        </h4>
+        </h4>}
+        {winner && <h4 className="text-white">
+          Winner: <span className="text-lime-500">{winner}</span>
+        </h4>}
       </div>
       <div className="grid grid-cols-3 gap-2 mb-5">
         <div
