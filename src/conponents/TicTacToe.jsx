@@ -50,10 +50,17 @@ function TicTacToe() {
     if (winner) {
       gameBoard = ["G", "A", "M", "E", "O", "V", "E", "R", "🎉"];
       setGameBoard(gameBoard);
-      setScoreBoard((prevScoreBorad) => ({
-        ...prevScoreBorad,
-        winner: prevScoreBorad.winner + 1,
-      }));
+      if (winner === "X") {
+        setScoreBoard((prevScoreBorad) => ({
+          ...prevScoreBorad,
+          X: prevScoreBorad.X + 1,
+        }));
+      } else {
+        setScoreBoard((prevScoreBorad) => ({
+          ...prevScoreBorad,
+          O: prevScoreBorad.O + 1,
+        }));
+      }
     }
   };
 
@@ -68,26 +75,32 @@ function TicTacToe() {
 
   return (
     <>
-      <div className="my-2 text-xl">
-      {winner === null && (
-          <h4 className="text-white">
-            Player Turn : <span className="text-yellow-500">{currentPlayer}</span>
-          </h4>
-        )}
+    <div className="my-2 text-xl flex items-center justify-center">
+      
         {winner && (
           <h4 className="text-white">
             Winner: <span className="text-lime-500">{winner}</span>
           </h4>
         )}
       </div>
-
-      <div className="my-3 text-xl text-white">
+      <div className="my-4 text-xl text-white px-5 py-2 text-center w-64">
         <div>Score Board</div>
         <div className="flex gap-2 items-center justify-between">
-          <span className="text-red-500">X: <span className="text-yellow-400">{scoreBoard.X}</span></span>
-          <span className="text-green-500">O: <span className="text-yellow-400">{scoreBoard.O}</span></span>
+          <span
+            className={`text-red-500  px-3 py-2 ${
+              currentPlayer === "X" ? "border-b-red-400 border-b-2" : ""
+            } `}
+          >
+            X: <span>{scoreBoard.X}</span>
+          </span>
+          <span
+            className={`text-lime-500  px-3 py-2 ${
+              currentPlayer === "O" ? "border-b-lime-400 border-b-2" : ""
+            } `}
+          >
+            O: <span>{scoreBoard.O}</span>
+          </span>
         </div>
-
       </div>
       <div className="grid grid-cols-3 gap-2 mb-5">
         <div
