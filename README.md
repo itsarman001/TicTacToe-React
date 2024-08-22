@@ -25,7 +25,7 @@ This project is a simple implementation of the classic Tic Tac Toe game using Re
 4. Open [http://localhost:5173/](http://localhost:5173/) in your browser.
 
 ### Features
-Play Tic Tac Toe either solo against the computer or multiplayer against another person.
+Play Tic Tac Toe either solo or multiplayer against another person.
 
 
 ### Screenshots

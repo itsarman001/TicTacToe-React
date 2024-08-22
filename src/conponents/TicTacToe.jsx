@@ -7,6 +7,7 @@ function TicTacToe() {
   const [scoreBoard, setScoreBoard] = useState({ X: 0, O: 0 });
 
   const handleClick = (i) => {
+    if(gameBoard[i] !== "") return;
     const newGameBoard = [...gameBoard];
     newGameBoard[i] = currentPlayer;
     setGameBoard(newGameBoard);
