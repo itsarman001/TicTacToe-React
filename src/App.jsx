@@ -1,12 +1,6 @@
 import React from "react";
 import TicTacToe from "./conponents/TicTacToe";
 
-function App() {
-  return (
-    
-      <TicTacToe />
-    </div>
-  );
-}
+const App = () => <TicTacToe />;
 
 export default App;

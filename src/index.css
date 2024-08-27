@@ -1,7 +1,32 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+  --primary: #222831;
+  --secondary : #393E46;
+  --accent: #00ADB5;
+  --light: #EEEEEE;
+}
 
-.btn {
-  @apply px-3 py-2 mx-auto bg-red-600 font-semibold uppercase rounded-md text-white hover:bg-red-700 active:scale-90 transition;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  background-color: var(--primary);
+  color: var(--light);
+  text-align: center;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-content: center;
+  margin: 1rem auto;
+  width: 50%;
+}
+
+.cell {
+  height: 50px;
+  width: 50px;
+  background-color: var(--light);
 }
