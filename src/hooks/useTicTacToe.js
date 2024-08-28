@@ -2,20 +2,36 @@ import { useState } from "react";
 
 const initialBoard = () => Array(9).fill("");
 
-export default function useTicTacToe() {
-  const [board, setBoard] = useState(initialBoard());
+const useTicTacToe = () => {
+  const [gameBoard, setGameBoard] = useState(initialBoard());
   const [isXNext, setIsXNext] = useState(true);
+  const [statusMessage, setStatusMessage] = useState(null);
 
-  const handleClick = (i) => {
-    const winner = checkWinner(board);
-    if (winner || board[i]) return;
-    const newBoard = [...board];
-    newBoard[i] = isXNext ? "X" : "O";
-    setBoard(newBoard);
+  const handleClick = (index) => {
+    if (gameBoard[index] !== "") return;
+    
+    const newGameBoard = [...gameBoard];
+    newGameBoard[index] = isXNext ? "X" : "O";
+    const winner = checkWinner(newGameBoard);
+
+    if (winner) {
+      setGameBoard(newGameBoard);
+      getStatusMessage(winner, newGameBoard);
+      return;
+    }
+
     setIsXNext(!isXNext);
+    getStatusMessage(winner, newGameBoard);
+    setGameBoard(newGameBoard);
   };
 
-  const winConditions = [
+  const getStatusMessage = (winner, newGameBoard) => {
+    if (winner) return setStatusMessage(`Player ${winner} Wins!`);
+    if (!newGameBoard.includes("")) return setStatusMessage("It's a Draw");
+    return setStatusMessage(`Player ${isXNext ? "O" : "X"} Turn 😉`);
+  };
+
+  const WINNING_PATTERN = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -26,36 +42,26 @@ export default function useTicTacToe() {
     [2, 4, 6],
   ];
 
-  const checkWinner = (currentBoard) => {
-    for (let i = 0; i < winConditions.length; i++) {
-      const [a, b, c] = winConditions[i];
+  const checkWinner = (gameBoard) => {
+    for (let index = 0; index < WINNING_PATTERN.length; index++) {
+      const [a, b, c] = WINNING_PATTERN[index];
       if (
-        currentBoard[a] &&
-        currentBoard[a] === currentBoard[b] &&
-        currentBoard[a] === currentBoard[c]
+        gameBoard[a] &&
+        gameBoard[a] === gameBoard[b] &&
+        gameBoard[a] === gameBoard[c]
       ) {
-        return currentBoard[a];
+        console.log(`Winner Found ${gameBoard[a]}`);
+        return gameBoard[a];
       }
     }
     return null;
   };
 
-  const getStatusMesage = () => {
-    const winner = checkWinner(board);
-    if(winner) return `Player ${winner} Wins!`;
-    if(!board.includes(null)) return `Its a Draw!`;
-    return `Player ${isXNext? "X": "O"} Turn`;
-  };
   const resetGame = () => {
-    setBoard[initialBoard()];
+    setGameBoard(initialBoard());
   };
 
-  return {
-    board,
-    isXNext,
-    handleClick,
-    getStatusMesage,
-    checkWinner,
-    resetGame,
-  };
-}
+  return { gameBoard, statusMessage, handleClick, resetGame };
+};
+
+export default useTicTacToe;
