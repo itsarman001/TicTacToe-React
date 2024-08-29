@@ -6,19 +6,21 @@ const useTicTacToe = () => {
   const [gameBoard, setGameBoard] = useState(initialBoard());
   const [isXNext, setIsXNext] = useState(true);
   const [statusMessage, setStatusMessage] = useState(null);
+  const [scoreBoard, setScoreBoard] = useState({ X: 0, O: 0 });
 
   const handleClick = (index) => {
     if (gameBoard[index] !== "") return;
-    
+
     const newGameBoard = [...gameBoard];
-    newGameBoard[index] = isXNext ? "X" : "O";
     const winner = checkWinner(newGameBoard);
 
     if (winner) {
       setGameBoard(newGameBoard);
       getStatusMessage(winner, newGameBoard);
+      getScoreBoard(winner)
       return;
     }
+    newGameBoard[index] = isXNext ? "X" : "O";
 
     setIsXNext(!isXNext);
     getStatusMessage(winner, newGameBoard);
@@ -50,18 +52,31 @@ const useTicTacToe = () => {
         gameBoard[a] === gameBoard[b] &&
         gameBoard[a] === gameBoard[c]
       ) {
-        console.log(`Winner Found ${gameBoard[a]}`);
         return gameBoard[a];
       }
     }
     return null;
   };
 
+  const getScoreBoard = (winner) => {
+    if (winner == "X") {
+      setScoreBoard((prevScoreBoard) => ({
+        ...prevScoreBoard,
+        X: prevScoreBoard.X + 1,
+      }));
+    } else {
+      setScoreBoard((prevScoreBoard) => ({
+        ...prevScoreBoard,
+        X: prevScoreBoard.X + 1,
+      }));
+    }
+  };
+
   const resetGame = () => {
     setGameBoard(initialBoard());
   };
 
-  return { gameBoard, statusMessage, handleClick, resetGame };
+  return { gameBoard, statusMessage, handleClick, scoreBoard, resetGame };
 };
 
 export default useTicTacToe;

@@ -1,8 +1,10 @@
-import useTicTacToe from "../hooks/useTicTacToe";
-
-const TicTacToe = () => {
-  const { gameBoard, handleClick, statusMessage, resetGame } = useTicTacToe();
-
+const TicTacToe = ({
+  gameBoard,
+  handleClick,
+  statusMessage,
+  scoreBoard,
+  resetGame,
+}) => {
   return (
     <section className="container">
       <div className="gameInfo">
@@ -16,6 +18,8 @@ const TicTacToe = () => {
             Restart
           </button>
         </div>
+
+        <div><span>X: {scoreBoard.X}</span> <span>O: {scoreBoard.O}</span></div>
       </div>
 
       <div className="gameBoard">
